@@ -3,6 +3,13 @@ import React, {useState, useEffect} from 'react';
 
 function App() {
 
+  const [splashScreen, setSplashScreen] = useState(false)
+
+
+  function handleSplashClick() {
+    setSplashScreen(false)
+  }
+
   const BASE_URL = "https://opentdb.com/api.php?amount=5"
 
   async function getQuestions() {
@@ -21,6 +28,12 @@ function App() {
   // getQuestions()
   return (
     <div className="App">
+      {splashScreen && 
+        <div className="splash-screen">
+
+        </div>
+      }
+      {!splashScreen && 
       <div className="quiz-container">
         <div className="question-container">
           <h4 className="question-text">How would one say goodbye in Spanish?</h4>
@@ -72,7 +85,7 @@ function App() {
           <button className="check-answers">Check Answers</button>
         </div>
       </div>
-
+      }
        <div className="circles">
          <span className="bg-circle blue"></span>
          <div className="bg-circle yellow"></div>
