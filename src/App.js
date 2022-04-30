@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 
 function App() {
 
-  const [splashScreen, setSplashScreen] = useState(false)
+  const [splashScreen, setSplashScreen] = useState(true)
 
 
   function handleSplashClick() {
@@ -30,11 +30,13 @@ function App() {
     <div className="App">
       {splashScreen && 
         <div className="splash-screen">
-
+          <h1 className="splash-title">Quizzical</h1>
+          <p className="splash-desc">Now with more categories!</p>
+          <button className="start-quiz-btn" onClick={handleSplashClick}>Start Quiz</button>
         </div>
       }
-      {!splashScreen && 
-      <div className="quiz-container">
+ 
+      {!splashScreen && <div className="quiz-container">
         <div className="question-container">
           <h4 className="question-text">How would one say goodbye in Spanish?</h4>
           <div className="answers-container">
@@ -81,11 +83,11 @@ function App() {
           </div>
         </div>
         <div className="score">
-          {/* <h4 className="correct-answers">You score 3/5 correct answers</h4>  */}
+           <h4 className="correct-answers">You score 3/5 correct answers</h4> 
           <button className="check-answers">Check Answers</button>
         </div>
       </div>
-      }
+    }
        <div className="circles">
          <span className="bg-circle blue"></span>
          <div className="bg-circle yellow"></div>

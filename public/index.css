@@ -50,6 +50,32 @@ button {
   right: -125px;
 }
 
+.splash-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.splash-title {
+  font-size: 2.5em;
+  margin-bottom: .5rem;
+  text-shadow: 1px 3px 0 #969696, 1px 7px 5px #aba8a8;
+}
+.splash-desc {
+  font-size: 1.125em;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+.start-quiz-btn {
+  font-size: 1.125em;
+  color: #F5f5f5;
+  background-color: #4D5B9E;
+  border-radius: 13px;
+  border: none;
+  padding: 1.25em 5.875em;
+}
+
 .quiz-container {
   justify-self: center;
   align-self: center;
