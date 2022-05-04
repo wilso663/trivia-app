@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/trivia-app/static/js/main.59193300.js",
+    "index.html": "/trivia-app/index.html",
+    "main.59193300.js.map": "/trivia-app/static/js/main.59193300.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.59193300.js"
+  ]
+}
