@@ -7,6 +7,8 @@ This app is meant to be a self directed exercise in
 3. Dynamic rendering
 
 ## General Use
+[Repository](https://github.com/wilso663/trivia-app)
+[Live solution](https://wilso663.github.io/trivia-app/)
 
 Users can
 1) Click the start button to begin the quiz
