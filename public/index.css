@@ -73,7 +73,7 @@ button {
   background-color: #4D5B9E;
   border-radius: 13px;
   border: none;
-  padding: 1.25em 5.875em;
+  padding: 1.25em 4.875em;
 }
 
 .quiz-container {
@@ -115,13 +115,13 @@ button {
   background-color: inherit;
   flex: 0 1 auto;
 }
-.score {
+.score-container {
   margin-top: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.correct-answers {
+.score-answers {
   margin-right: 1.5rem;
 }
 .check-answers {
@@ -130,8 +130,8 @@ button {
   border-radius: 13px;
   border: none;
   padding: .875em 1.5em;
-
 }
+
 .selected {
   background-color: #D6DBF5;
   border: none;
@@ -141,9 +141,12 @@ button {
 }
 .selected.incorrect {
   background-color: #F8BCBC;
+  opacity: .9;
+  color: #000;
 }
 .correct {
   background-color: #94D7A2;
   border: none;
+  font-weight: bold;
+  color: #000;
 }
-
