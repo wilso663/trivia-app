@@ -3,16 +3,19 @@ import React, {useState, useEffect} from 'react';
 import Question from './components/Question';
 import {nanoid} from 'nanoid';
 
-export interface DestructuredDataProps {
+export interface DestructuredAPIDataProps {
   incorrect_answers: string[];
   correct_answer: string;
   question: string;
 }
 
-export interface QuizDataProps extends DestructuredDataProps{
+export interface QuizDataProps extends DestructuredAPIDataProps{
   id: string,
   selected_answer: string;
 }
+
+//Open Trivia Database API URL
+const BASE_URL = "https://opentdb.com/api.php?amount=5&type=multiple"
 
 function App() {
 
@@ -20,29 +23,32 @@ function App() {
   const [quizOver, setQuizOver] = useState<boolean>(false)
   const [quizData, setQuizData] = useState<Array<QuizDataProps>>([])
   const [score, setScore] = useState<Number>(0)
-  const [isLoaded, setIsLoaded] = useState<boolean>(true)
+  const [hasQuestions, setHasQuestions] = useState<boolean>(true)
 
-  console.log(quizData)
-
-   useEffect(() => {
+  useEffect(() => {
     fetchTriviaData()
 
-   }, [])
+  }, [])
 
   function handleSplashClick(): void {
     setSplashScreen(false)
   }
 
-  const BASE_URL = "https://opentdb.com/api.php?amount=5&type=multiple"
-
+  /* To format the quiz data in a easy to use format, 
+   * I've added an id property (for react Keys and value comparison)
+   * and the selected_answer property
+   * 
+   * I figured that using a string and updating the users selected answer
+   * to the literal value was easiest in making the comparison to the correct value.
+   */
   async function fetchTriviaData(): Promise<void> {
-    setIsLoaded(false)
+    setHasQuestions(false)
     const res = await fetch(BASE_URL)
     let data = await res.json()
     
-    const dataArr = data.results.map(( {incorrect_answers, correct_answer, question}: DestructuredDataProps) => ({incorrect_answers, correct_answer, question}))
+    const dataArr = data.results.map(( {incorrect_answers, correct_answer, question}: DestructuredAPIDataProps) => ({incorrect_answers, correct_answer, question}))
 
-    const questionArr = dataArr.map((question: DestructuredDataProps) => (
+    const questionArr = dataArr.map((question: DestructuredAPIDataProps) => (
       {
         id: nanoid(),
         ...question,
@@ -51,14 +57,14 @@ function App() {
     ))
 
     setQuizData(questionArr)
-    setIsLoaded(true)
+    setHasQuestions(true)
 
   }
 
   function scoreQuiz(): void {
     setScore(
       quizData.map(question => question.correct_answer === question.selected_answer ? 1 : 0)
-          .reduce((scoreSum: number, score: number) => scoreSum + score, 0)
+              .reduce((scoreSum: number, score: number) => scoreSum + score, 0)
     )
     setQuizOver(quizOver => true)
   }
@@ -69,6 +75,10 @@ function App() {
     setQuizOver(quizOver => false)
   }
 
+  /* When the user clicks on a question answer, remap the quiz data to update the 
+   * selected answer for that question ID to the literal answer value.
+   * I did this for easy value comparison.
+   */ 
   function toggleAnswer(id: string, answer: string): void {
     setQuizData(prevQuizData => prevQuizData.map(
       question => question.id === id ?
@@ -104,7 +114,7 @@ function App() {
         </div>
       }
  
-      {!splashScreen && isLoaded && 
+      {!splashScreen && hasQuestions && 
       <div className="quiz-container">
         {questionElements}
         <div className="score-container">
