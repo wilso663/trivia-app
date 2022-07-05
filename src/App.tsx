@@ -3,13 +3,24 @@ import React, {useState, useEffect} from 'react';
 import Question from './components/Question';
 import {nanoid} from 'nanoid';
 
+export interface DestructuredDataProps {
+  incorrect_answers: string[];
+  correct_answer: string;
+  question: string;
+}
+
+export interface QuizDataProps extends DestructuredDataProps{
+  id: string,
+  selected_answer: string;
+}
+
 function App() {
 
-  const [splashScreen, setSplashScreen] = useState(true)
-  const [quizOver, setQuizOver] = useState(false)
-  const [quizData, setQuizData] = useState([])
-  const [score, setScore] = useState(0)
-  const [isLoaded, setIsLoaded] = useState(true)
+  const [splashScreen, setSplashScreen] = useState<boolean>(true)
+  const [quizOver, setQuizOver] = useState<boolean>(false)
+  const [quizData, setQuizData] = useState<Array<QuizDataProps>>([])
+  const [score, setScore] = useState<Number>(0)
+  const [isLoaded, setIsLoaded] = useState<boolean>(true)
 
   console.log(quizData)
 
@@ -18,20 +29,20 @@ function App() {
 
    }, [])
 
-  function handleSplashClick() {
+  function handleSplashClick(): void {
     setSplashScreen(false)
   }
 
   const BASE_URL = "https://opentdb.com/api.php?amount=5&type=multiple"
 
-  async function fetchTriviaData() {
+  async function fetchTriviaData(): Promise<void> {
     setIsLoaded(false)
     const res = await fetch(BASE_URL)
     let data = await res.json()
     
-    const dataArr = data.results.map(( {incorrect_answers, correct_answer, question}) => ({incorrect_answers, correct_answer, question}))
+    const dataArr = data.results.map(( {incorrect_answers, correct_answer, question}: DestructuredDataProps) => ({incorrect_answers, correct_answer, question}))
 
-    const questionArr = dataArr.map(question => (
+    const questionArr = dataArr.map((question: DestructuredDataProps) => (
       {
         id: nanoid(),
         ...question,
@@ -44,21 +55,21 @@ function App() {
 
   }
 
-  function scoreQuiz() {
+  function scoreQuiz(): void {
     setScore(
       quizData.map(question => question.correct_answer === question.selected_answer ? 1 : 0)
-          .reduce((scoreSum, score) => scoreSum + score, 0)
+          .reduce((scoreSum: number, score: number) => scoreSum + score, 0)
     )
     setQuizOver(quizOver => true)
   }
 
-  function resetQuiz() {
+  function resetQuiz(): void {
     fetchTriviaData()
     setScore(0)
     setQuizOver(quizOver => false)
   }
 
-  function toggleAnswer(id, answer) {
+  function toggleAnswer(id: string, answer: string): void {
     setQuizData(prevQuizData => prevQuizData.map(
       question => question.id === id ?
       {
@@ -93,10 +104,11 @@ function App() {
         </div>
       }
  
-      {!splashScreen && isLoaded && <div className="quiz-container">
+      {!splashScreen && isLoaded && 
+      <div className="quiz-container">
         {questionElements}
         <div className="score-container">
-          {quizOver && <h4 className="score-answers">You score {score}/{quizData.length} correct answers</h4> }
+          {quizOver && <h4 className="score-answers"><>You score {score}/{quizData.length} correct answers</></h4> }
           {!quizOver ? <button className="check-answers" onClick={scoreQuiz}>Check Answers</button> :
             <button className="check-answers" onClick={resetQuiz}>Play Again</button> }
         </div>

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {nanoid} from 'nanoid'
 
-interface QuestionProps {
+export interface QuestionProps {
   id: string;
   question: string;
   correct_answer: string;
