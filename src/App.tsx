@@ -45,7 +45,6 @@ function App() {
     setHasQuestions(false)
     const res = await fetch(BASE_URL)
     let data = await res.json()
-    
     const dataArr = data.results.map(( {incorrect_answers, correct_answer, question}: DestructuredAPIDataProps) => ({incorrect_answers, correct_answer, question}))
 
     const questionArr = dataArr.map((question: DestructuredAPIDataProps) => (

@@ -47,10 +47,10 @@ const Question: React.FC<QuestionProps> = ({id, question, correct_answer, incorr
 
     return (
       <button
-      key={nanoid()}
-      className={btnClassName}
-      onClick={() => toggleAnswer(id, answer)}
-      disabled={quizChecked}
+        key={nanoid()}
+        className={btnClassName}
+        onClick={() => toggleAnswer(id, answer)}
+        disabled={quizChecked}
       >
         {answer}
       </button>
@@ -59,9 +59,9 @@ const Question: React.FC<QuestionProps> = ({id, question, correct_answer, incorr
 
 
   return (
-    <div className="question-container">
-      <h4 className="question-text">{decodeHTMLEntities(question)}</h4>
-      <div className="answers-container">
+    <div data-testid="question" className="question-container">
+      <h4 data-testid="question-text" className="question-text">{decodeHTMLEntities(question)}</h4>
+      <div data-testid="answers" className="answers-container">
         {answersElements}
       </div>
     </div>
